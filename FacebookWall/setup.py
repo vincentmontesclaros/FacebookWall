@@ -15,7 +15,7 @@ setup(
   # so instead of "src/FacebookWall/app," we'd have "src/app."
   # Anyway, for now the value in this is that you don't have to write "import FacebookWall.app,"
   # you can write "import app."
-  packages=['',],
+  packages=['posts',],
   package_dir={ '' : 'src/FacebookWall' },
 
   install_requires=[
