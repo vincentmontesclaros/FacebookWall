@@ -1,0 +1,7 @@
+setup.py
+src/FacebookWall/manage.py
+src/FacebookWall/FacebookWall.egg-info/PKG-INFO
+src/FacebookWall/FacebookWall.egg-info/SOURCES.txt
+src/FacebookWall/FacebookWall.egg-info/dependency_links.txt
+src/FacebookWall/FacebookWall.egg-info/requires.txt
+src/FacebookWall/FacebookWall.egg-info/top_level.txt

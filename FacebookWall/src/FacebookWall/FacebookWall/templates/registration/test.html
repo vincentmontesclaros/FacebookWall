@@ -1,0 +1,14 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+
+<div id="login">
+  <h1>Log in</h1>
+  <form action = "/login/" method="post">
+	{% if next %}
+	<input type="hidden" name="next" value="{{ next }}" />
+	{% endif %}
+    <input type="username" placeholder="Username" value = "{{ username }}" />
+    <input type="password" placeholder="Password" name="password" value=""/>
+    <input type="submit" value="Log in" />
+  </form>
+</div>
