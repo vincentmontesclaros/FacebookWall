@@ -8,3 +8,5 @@ class Post(models.Model):
         max_length=255,
     )
     pub_date = models.DateTimeField('date published')
+    # user, user_id --> the one who posted the post
+	# likes. user_id of the likers

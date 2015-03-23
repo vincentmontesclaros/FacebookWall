@@ -5,9 +5,31 @@
 	<h1>Posts</h1>
 </div>
 
+{% if latest_post_list %}
+<!-- <ul>
+  {% for post in latest_post_list %}
+    <li class="post">{{ post.content }} <p> Posted on: </p> {{ post.pub_date }}</li>
+  {% endfor %}
+</ul> -->
+
 <ul>
-  {% for post in object_list %}
-    <li class="post">{{ post }}</li>
+  {% for post in latest_post_list %}
+    <div class="panel panel-info">
+    	<div class="panel-heading">
+    		<p> User </p>
+    	</div>
+    	<div class="panel-body">
+    	{{ post.content }}
+    	</div>
+    	<div class="panel-footer">
+    		<p> Posted on: {{ post.pub_date }}</p>
+    	</div>
+    </div>
   {% endfor %}
 </ul>
+
+{% else %}
+    <p> No posts are available.</p>
+{% endif %}
+
 {% endblock %}
