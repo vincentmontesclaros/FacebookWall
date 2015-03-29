@@ -1,32 +1,92 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block content %}
+
+<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">Postbook</a>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <!-- <ul class="nav navbar-nav">
+	        <li class="active"><a href="#"> Feed <span class="sr-only">(current)</span></a></li>
+	        <li><a href="/wall/">Wall</a></li>
+          </ul> -->
+		    <ul class="nav navbar-nav navbar-right">
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi, {{ user }} <span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		            <li class="divider"></li>
+		            <li><a href="/logout/">Logout</a></li>
+		          </ul>
+		        </li>
+		        <li><a href="/logout/">Logout</a></li>
+	  		</ul>
+      	</div>
+  	  </div>
+</nav>
+
 <div class="page-header">
 	<h1>Posts</h1>
 </div>
 
-{% if latest_post_list %}
-<!-- <ul>
-  {% for post in latest_post_list %}
-    <li class="post">{{ post.content }} <p> Posted on: </p> {{ post.pub_date }}</li>
-  {% endfor %}
-</ul> -->
+<!-- TEXTAREA FOR CREATING NEW POSTS -->
+<!-- <form action="/post/" method="post">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Submit">
+</form> -->
+<form action="{% url 'posts:post' %}" method="post">
+	{% csrf_token %}
+	<div class="new-post">
+		<textarea name="content" rows="3" cols="90" placeholder="What's on your mind?"></textarea>
+		<button class="btn btn-primary btn-sm" id="post-button" type="submit" value="submit">Post</button>
+	</div>
+</form>
 
-<ul>
-  {% for post in latest_post_list %}
-    <div class="panel panel-info">
-    	<div class="panel-heading">
-    		<p> User </p>
-    	</div>
-    	<div class="panel-body">
-    	{{ post.content }}
-    	</div>
-    	<div class="panel-footer">
-    		<p> Posted on: {{ post.pub_date }}</p>
-    	</div>
-    </div>
-  {% endfor %}
-</ul>
+<br>
+<br>
+{% if latest_post_list %}
+<div class="row">
+	<div class="span3 offset1">
+		<ul>
+		  {% for post in latest_post_list %}
+		    <div class="panel panel-primary">
+		    	<div class="panel-heading">
+		    		<p> <font size="5"> {{ post.author }}</font> <small>{{ post.pub_date }}</small></p>
+		    	</div>
+		    	<div class="panel-body">
+		    	{{ post.content|linebreaksbr }}
+		    	</div>
+		    	<div class="panel-footer">
+		    		<small>
+		    		<a href="{% url 'posts:like' post.id">
+		    		<!-- <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> -->Like
+		    		</a>&nbsp;
+		    		{% if post.author == user %}
+		    		<a href="{% url 'posts:delete' post.id %}">Delete
+		    		<!-- <span class="glyphicon glyphicon-remove" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete Post"></span> -->
+		    		</a>&nbsp;
+		    		<a href="{% url 'posts:edit' post.id %}">Edit
+		    		<!-- <span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit Post"></span> -->
+		    		</a>
+		    		{% endif %}
+		    		</small>
+		    	</div>
+		    </div>
+		  {% endfor %}
+		</ul>
+	</div>
+</div>
 
 {% else %}
     <p> No posts are available.</p>

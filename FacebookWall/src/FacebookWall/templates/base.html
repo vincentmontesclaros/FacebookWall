@@ -12,12 +12,14 @@
 
 	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/signin.css"/>
-	<script src="{{ STATIC_URL }} bootstrap/js/bootstrap.min.js"></script>
-
+	<link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/feed.css"/>
+		<!-- <script src="{{ STATIC_URL }} js/post.js"></script> -->
 	{% block extrastyle %}{% endblock %}
 
 	</head>
 	<body class="{% block bodyclass %}{% endblock %}">
+	<script src="{{ STATIC_URL }} js/jquery-2.1.3.js"></script>
+	<script src="{{ STATIC_URL }} bootstrap/js/bootstrap.min.js"></script>
 	  <div class="container">
 	    {% block content %}
 		{% endblock %}
