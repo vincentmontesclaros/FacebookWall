@@ -6,7 +6,7 @@ urlpatterns = patterns('',
                        # Examples:
                        # url(r'^admin/', include(admin.site.urls)),
                        url(r'^$',
-                           login_required(views.PostsView.as_view()),
+                           login_required(views.IndexView.as_view()),
                            name='index'),
                        url(r'^login/$', 'django.contrib.auth.views.login', {
                             'template_name': 'login.html'}, name='login'),

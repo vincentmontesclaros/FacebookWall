@@ -66,8 +66,11 @@ class LikePostView(TemplateView):
 
     def get(self, request, post_id):
         post = get_object_or_404(Post, pk=post_id)
-        # check if the current user has already liked this post
-        likers = post.likers.all()
+        if post.likers.filter(username=request.user).exists():
+            post.likers.remove(request.user)
+        else:
+            post.likers.add(request.user)
+        return redirect(reverse('posts:feed'))
 
 
 def register_user(request):
