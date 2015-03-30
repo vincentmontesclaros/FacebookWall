@@ -10,9 +10,10 @@ urlpatterns = patterns('',
                            name='index'),
                        url(r'^login/$', 'django.contrib.auth.views.login', {
                             'template_name': 'login.html'}, name='login'),
-                       url(r'^logout/$', login_required(views.LogoutView.as_view()), name='logout'),
+                       url(r'^logout/$', login_required(
+                           views.LogoutView.as_view()), name='logout'),
                        url(r'^feed/$', login_required(
-                                      views.PostsView.as_view()), name='feed'),
+                           views.PostsView.as_view()), name='feed'),
                        url(r'^register/$', 'posts.views.register_user'),
                        url(r'^register_success/$',
                            'posts.views.register_success'),

@@ -18,19 +18,13 @@
 
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      <!-- <ul class="nav navbar-nav">
-		        <li class="active"><a href="#"> Feed <span class="sr-only">(current)</span></a></li>
-		        <li><a href="/wall/">Wall</a></li>
-	          </ul> -->
 			    <ul class="nav navbar-nav navbar-right">
 			        <li class="dropdown">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi, {{ user }} <span class="caret"></span></a>
 			          <ul class="dropdown-menu" role="menu">
-			            <li class="divider"></li>
-			            <li><a href="{% url 'posts:logout'">Logout</a></li>
+			            <li><a href="{% url 'posts:logout' %}">Logout</a></li>
 			          </ul>
 			        </li>
-			        <li><a href="/logout/">Logout</a></li>
 		  		</ul>
 	      	</div>
 	  	  </div>
@@ -69,12 +63,12 @@
 			    		{% else %}
 			    		Unlike
 			    		{% endif %}
-			    		</a>&nbsp;
+			    		</a>
 			    		{% if post.author == user %}
-			    		<a href="{% url 'posts:edit' post.id %}">Edit
+			    		<a href="{% url 'posts:edit' post.id %}">· Edit
 			    		<!-- <span class="glyphicon glyphicon-remove" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete Post"></span> -->
-			    		</a>&nbsp;
-			    		<a href="{% url 'posts:delete' post.id %}">Delete
+			    		</a>
+			    		<a href="{% url 'posts:delete' post.id %}">· Delete
 			    		<!-- <span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit Post"></span> -->
 			    		</a>
 			    		{% endif %}
@@ -83,11 +77,41 @@
 			    	<div class="panel-footer">
 			    		<small>
 			    		{% if post.likers.count > 0 %}
-			    		Display likers here
+			    		<a href="" data-toggle="modal" data-target="#likersModal{{post.id}}">
+			    		<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Like"></span>
+			    			{{ post.likers.count }}
+			    			{% if post.likers.count == 1 %}
+			    			 person likes
+			    			 {% else %}
+			    			 people like
+			    			 {% endif %}
+			    			 this
+			     	 	</a>	 	
+			    		</small>	
+			    		<div class="modal fade" id="likersModal{{post.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			    			<div class="modal-dialog">			    			
+			    				<div class="modal-content">
+				    				<div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								        <h4 class="modal-title" id="myModalLabel">People Who Like This</h4>
+							      	</div>
+			    					<div class="modal-body">
+			    					<ul>
+			    					{{ likers.count }}
+			    					{% for liker in post.likers.all %}
+			    					<li>{{liker.username}}</li>
+			    					{% endfor %}
+			    					</ul>
+						     	 	</div>
+			    					<div class="modal-footer">
+							        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							     	 </div>
+					     	 	</div>
+				     	 	</div>
+			     	 	</div>
 			    		{% else %}
-			    		Be the first to like this!
-			    		{% endif %}
-			    		</small>
+			    		Be the first to like this.
+			    		{% endif %} 	
 			    	</div>
 			    </div>
 			  {% endfor %}
@@ -97,5 +121,4 @@
 {% else %}
     <p> No posts are available.</p>
 {% endif %}
-
 {% endblock %}

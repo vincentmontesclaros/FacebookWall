@@ -52,7 +52,6 @@ class CreatePostView(TemplateView):
                 content=request.POST['content'],
                 author=request.user
             )
-        latest_post_list = Post.objects.order_by('-pub_date')[:10]
         return redirect(reverse('posts:feed'))
 
 
@@ -68,7 +67,6 @@ class RemovePostView(TemplateView):
     def get(self, request, post_id):
         post = get_object_or_404(Post, pk=post_id)
         post.delete()
-        latest_post_list = Post.objects.order_by('-pub_date')[:10]
         return redirect(reverse('posts:feed'))
 
 
