@@ -27,7 +27,7 @@
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi, {{ user }} <span class="caret"></span></a>
 			          <ul class="dropdown-menu" role="menu">
 			            <li class="divider"></li>
-			            <li><a href="/logout/">Logout</a></li>
+			            <li><a href="{% url 'posts:logout'">Logout</a></li>
 			          </ul>
 			        </li>
 			        <li><a href="/logout/">Logout</a></li>
@@ -35,13 +35,6 @@
 	      	</div>
 	  	  </div>
 	</nav>
-
-	<!-- TEXTAREA FOR CREATING NEW POSTS -->
-	<!-- <form action="/post/" method="post">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" value="Submit">
-	</form> -->
 	<div class="form-group">
 		<form action="{% url 'posts:post' %}" method="post">
 			{% csrf_token %}
@@ -71,7 +64,11 @@
 			    		<small>
 			    		<a href="{% url 'posts:like' post.id %}">
 			    		<!-- <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> -->
+			    		{% if post not in liked_posts %}
 			    		Like
+			    		{% else %}
+			    		Unlike
+			    		{% endif %}
 			    		</a>&nbsp;
 			    		{% if post.author == user %}
 			    		<a href="{% url 'posts:edit' post.id %}">Edit
@@ -85,7 +82,11 @@
 			    	</div>
 			    	<div class="panel-footer">
 			    		<small>
+			    		{% if post.likers.count > 0 %}
 			    		Display likers here
+			    		{% else %}
+			    		Be the first to like this!
+			    		{% endif %}
 			    		</small>
 			    	</div>
 			    </div>

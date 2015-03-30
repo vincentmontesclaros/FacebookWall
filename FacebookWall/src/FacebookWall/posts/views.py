@@ -9,6 +9,15 @@ from django.contrib.auth.decorators import login_required
 from posts import forms
 
 
+class LoginView(TemplateView):
+    def get(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return redirect(reverse('feeds:feed'))
+
+
 class PostsView(TemplateView):
     template_name = 'feed.html'
 
@@ -16,9 +25,11 @@ class PostsView(TemplateView):
         if request.user.is_authenticated():
             latest_post_list = Post.objects.order_by('-pub_date')[:10]
             user = request.user
+            liked_posts = Post.objects.all().filter(likers=request.user)
             return self.render_to_response({
                 'latest_post_list': latest_post_list,
                 'user': user,
+                'liked_posts': liked_posts,
                 })
         else:
             return redirect(reverse('posts:index'))
@@ -92,27 +103,7 @@ def register_success(request):
     return render_to_response('register_success.html')
 
 
-def logout_page(request):
-    logout(request)
-    # Redirect to a success page.
-    # return render(request, 'login.html')
-    return HttpResponseRedirect('/')
-
-
-def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    login(request, user)
-    return redirect(reverse('feeds:feed'))
-
-# def get_queryset(self):
-#     """ Return the last ten published posts. """
-#     return Post.objects.order_by('-pub_date')[:10]
-
-# class CreatePostView(CreateView):
-#     model = Post
-#     template_name = 'edit_post.html'
-
-#     def get_success_url(self):
-#         return reverse('feed')
+class LogoutView(TemplateView):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect('/')
