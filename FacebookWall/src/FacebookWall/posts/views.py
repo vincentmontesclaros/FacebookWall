@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from posts import forms
 
 
-class LoginView(TemplateView):
+class Login(TemplateView):
     def get(self, request):
         username = request.POST['username']
         password = request.POST['password']
@@ -18,7 +18,7 @@ class LoginView(TemplateView):
         return redirect(reverse('feeds:feed'))
 
 
-class PostsView(TemplateView):
+class Posts(TemplateView):
     template_name = 'feed.html'
 
     def get(self, request):
@@ -45,7 +45,7 @@ class IndexView(TemplateView):
             return self.render_to_response({'login_form': forms.LoginForm()})
 
 
-class CreatePostView(TemplateView):
+class CreatePost(TemplateView):
     def post(self, request):
         if request.POST['content'] != '':
             post = Post.objects.create(
@@ -55,13 +55,16 @@ class CreatePostView(TemplateView):
         return redirect(reverse('posts:feed'))
 
 
-class EditPostView(TemplateView):
-    def post(self, request):
-        # TODO
-        bla
+class EditPost(TemplateView):
+    def post(self, request, post_id):
+        post = get_object_or_404(Post, pk=post_id)
+        if request.POST['new_content'] != '':
+            post.content = request.POST['new_content']
+            post.save()
+        return redirect(reverse('posts:feed'))
 
 
-class RemovePostView(TemplateView):
+class RemovePost(TemplateView):
     template_name = 'feed.html'
 
     def get(self, request, post_id):
@@ -70,7 +73,7 @@ class RemovePostView(TemplateView):
         return redirect(reverse('posts:feed'))
 
 
-class LikePostView(TemplateView):
+class LikePost(TemplateView):
     template_name = 'feed.html'
 
     def get(self, request, post_id):
@@ -101,7 +104,7 @@ def register_success(request):
     return render_to_response('register_success.html')
 
 
-class LogoutView(TemplateView):
+class Logout(TemplateView):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect('/')

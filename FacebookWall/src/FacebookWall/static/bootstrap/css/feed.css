@@ -1,9 +1,12 @@
-.new-post {
-	margin: 0 auto;
-    display:inline-block;
-    position:relative;
-}
-
 .post-button {
 	text-align: right;
+}
+
+.panel-container {	
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+#alert {
+	text-align: center;
 }
