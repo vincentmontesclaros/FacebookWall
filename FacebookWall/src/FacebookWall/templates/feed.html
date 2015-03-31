@@ -22,7 +22,7 @@
 			        <li class="dropdown">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hi, {{ user }} <span class="caret"></span></a>
 			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="{% url 'posts:logout' %}">Logout</a></li>
+			            <li><a href="{% url 'posts:logout'%}">Logout</a></li>
 			          </ul>
 			        </li>
 		  		</ul>
@@ -53,7 +53,7 @@
 			    		<p> <font size="5"> {{ post.author }}</font> <small>{{ post.pub_date }}</small></p>
 			    	</div>
 			    	<div class="panel-body">
-			    		<div class="post-container" id="{{post.id}}">{{ post.content|linebreaksbr }}</div>
+			    		<div class="post-container" id="post/{{post.id}}">{{ post.content|linebreaksbr }}</div>
 			    	</div>
 			    	<div class="panel-footer">
 			    		<small>
@@ -66,7 +66,7 @@
 			    		{% endif %}
 			    		</a>
 			    		{% if post.author == user %}
-			    		<a href="#" id="edit-post" data-index="{{post.id}}">· Edit</a>
+			    		<a href="#" class="edit-post" id="{{post.id}}" data-index="{{post.id}}">· Edit</a>
 			    		<a href="" data-toggle="modal" data-target="#deletePost{{post.id}}" >· Delete
 			    		</a>
 			    		<div class="modal fade" id="deletePost{{post.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

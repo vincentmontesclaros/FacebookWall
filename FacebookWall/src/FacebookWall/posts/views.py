@@ -1,4 +1,5 @@
-from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import redirect, render
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import TemplateView
@@ -6,10 +7,11 @@ from posts.models import Post
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
-from posts import forms
+from posts.forms import UserRegistrationForm
 
 
 class Login(TemplateView):
+
     def get(self, request):
         username = request.POST['username']
         password = request.POST['password']
@@ -30,7 +32,7 @@ class Posts(TemplateView):
                 'latest_post_list': latest_post_list,
                 'user': user,
                 'liked_posts': liked_posts,
-                })
+            })
         else:
             return redirect(reverse('posts:index'))
 
@@ -46,6 +48,7 @@ class IndexView(TemplateView):
 
 
 class CreatePost(TemplateView):
+
     def post(self, request):
         if request.POST['content'] != '':
             post = Post.objects.create(
@@ -56,6 +59,7 @@ class CreatePost(TemplateView):
 
 
 class EditPost(TemplateView):
+
     def post(self, request, post_id):
         post = get_object_or_404(Post, pk=post_id)
         if request.POST['new_content'] != '':
@@ -85,19 +89,32 @@ class LikePost(TemplateView):
         return redirect(reverse('posts:feed'))
 
 
-def register_user(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/register_success')
+class RegisterUser(TemplateView):
+    template_name = 'index.html'
 
-    args = {}
-    args.update(csrf(request))
+    def get(self, request):
+        if request.method == "POST":
+            form = UserForm(request.POST)
+            if form.is_valid():
+                new_user = User.objects.create_user(**form.cleaned_data)
+                return redirect(reverse('posts:register_success'))
+        else:
+            form = UserRegistrationForm()
+        return render(request, 'index.html', {'form': form})
 
-    args['form'] = UserCreationForm()
 
-    return render_to_response('register.html', args)
+class Index(TemplateView):
+    template_name = 'index.html'
+
+    def get(self, request):
+        if request.method == "POST":
+            form = UserForm(request.POST)
+            if form.is_valid():
+                new_user = User.objects.create_user(**form.cleaned_data)
+                return redirect(reverse('posts:register_success'))
+        else:
+            form = UserRegistrationForm()
+        return render(request, 'index.html', {'form': form})
 
 
 def register_success(request):
@@ -105,6 +122,7 @@ def register_success(request):
 
 
 class Logout(TemplateView):
+
     def get(self, request):
         logout(request)
-        return HttpResponseRedirect('/')
+        return render(request, 'index.html')

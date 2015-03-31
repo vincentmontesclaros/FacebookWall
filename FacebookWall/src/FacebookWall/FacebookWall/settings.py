@@ -102,6 +102,6 @@ STATICFILES_FINDERS = (
     #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/index/'
 
 LOGIN_REDIRECT_URL = '/feed/'
