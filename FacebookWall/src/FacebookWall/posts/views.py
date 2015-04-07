@@ -1,13 +1,14 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.core.urlresolvers import reverse
+from django.core.context_processors import csrf
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.shortcuts import redirect, render
-from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login, logout
 from django.views.generic import TemplateView
-from posts.models import Post
-from django.http import HttpResponseRedirect, HttpResponse
-from django.core.context_processors import csrf
-from django.contrib.auth.decorators import login_required
+
 from posts.forms import UserRegistrationForm
+from posts.models import Post
 
 
 class Login(TemplateView):
