@@ -1,6 +1,6 @@
 function editableTextBlurred() {
     var post_id = $(".edit-post").data('index');
-    var html = $(this).val().replace(/\r\n|\r|\n/g,"\n");
+    var html = $(this).val();
     var viewableText = $('<div class="post-container" id="' + post_id + '"">' + html + '</div>' );
     $("#edit-post-" + post_id).replaceWith(viewableText);
     viewableText.click(divClicked);
@@ -11,10 +11,8 @@ $(document).ready(function() {
 
     $("a").on("click", function (e) {
         post_id = $(this).attr("id");
-        var divHtml = $('div[class=post-container][id="post/'+post_id+'"]').html();
-        // console.log(divHtml)
+        var divHtml = $('div[class=post-container][id="post/'+post_id+'"]').html().replace(/<br\s?\/?>/g,"\n");;
         var newDiv = $('<div class="well well-lg" id=well-' + post_id + '><textarea name="content" id="edit-' + post_id + '" rows="3" class="form-control">' + divHtml + '</textarea><div class="post-button"><button class="btn btn-default btn-sm" id="cancel-edit" type="submit" value="submit">Cancel</button>&nbsp<button class="btn btn-primary" id="edit-button" type="submit" value="submit">Edit</button></div>');
-        console.log(post_id)
         $('div[class=post-container][id="post/'+post_id+'"]').replaceWith(newDiv);
         var strLength = $("#edit-" + post_id).val().length * 2;
         $("#edit-" + post_id).focus();

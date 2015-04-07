@@ -48,7 +48,6 @@ class IndexView(TemplateView):
 
 
 class CreatePost(TemplateView):
-
     def post(self, request):
         if request.POST['content'] != '':
             post = Post.objects.create(
@@ -59,7 +58,6 @@ class CreatePost(TemplateView):
 
 
 class EditPost(TemplateView):
-
     def post(self, request, post_id):
         post = get_object_or_404(Post, pk=post_id)
         if request.POST['new_content'] != '':
