@@ -1,6 +1,6 @@
 function editableTextBlurred() {
     var post_id = $(".edit-post").data('index');
-    var html = $(this).val();
+    var html = $(this).val().replace(/\r\n|\r|\n/g,"\n");
     var viewableText = $('<div class="post-container" id="' + post_id + '"">' + html + '</div>' );
     $("#edit-post-" + post_id).replaceWith(viewableText);
     viewableText.click(divClicked);

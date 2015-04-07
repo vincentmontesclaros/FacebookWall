@@ -11,7 +11,6 @@ from posts.forms import UserRegistrationForm
 
 
 class Login(TemplateView):
-
     def get(self, request):
         username = request.POST['username']
         password = request.POST['password']
@@ -117,12 +116,7 @@ class Index(TemplateView):
         return render(request, 'index.html', {'form': form})
 
 
-def register_success(request):
-    return render_to_response('register_success.html')
-
-
 class Logout(TemplateView):
-
     def get(self, request):
         logout(request)
         return render(request, 'index.html')

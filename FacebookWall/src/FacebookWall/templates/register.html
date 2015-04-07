@@ -3,36 +3,41 @@
 {% block content %}
 
 <div class="page-header">
-	<h1><span class="label label-success">Register</span></h1>
+	<h1>Registration</h1>
 </div>
-
-<form class="form-horizontal" method="post">{% csrf_token %}
-    <fieldset>
-        <legend>{{ title }}</legend>
-        {% for field in form %}
-            {% if field.errors %}
-                <div class="control-group error">
-                    <label class="control-label">{{ field.label }}</label> 
-                    <div class="controls">{{ field }}
-                        <span class="help-inline">
-                            {% for error in  field.errors %}{{ error }}{% endfor %}
-                        </span>
-                    </div>
-                </div>
-            {% else %}
-                <div class="control-group">
-                    <label class="control-label">{{ field.label }}</label> 
-                    <div class="controls">{{ field }}
-                        {% if field.help_text %}
-                            <p class="help-inline"><small>{{ field.help_text }}</small></p>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </fieldset>
-    <div class="form-actions">
-        <button type="submit" class="btn btn-info" >Sign Up</button>
-    </div>
-</form>
+<div class="panel panel-primary">
+<div class="panel-body">
+	<div class="form-group">
+	<form class="form-horizontal" method="post">{% csrf_token %}
+	    <fieldset>
+	        <legend>{{ title }}</legend>
+	        {% for field in form %}
+	            {% if field.errors %}
+	                <div class="control-group error">
+	                    <label class="control-label">{{ field.label }}</label> 
+	                    <div class="controls">{{ field }}
+	                        <span class="help-inline">
+	                            {% for error in  field.errors %}{{ error }}{% endfor %}
+	                        </span>
+	                    </div>
+	                </div>
+	            {% else %}
+	                <div class="control-group">
+	                    <label class="control-label">{{ field.label }}</label> 
+	                    <div class="controls">{{ field }}
+	                        {% if field.help_text %}
+	                            <p class="help-inline"><small>{{ field.help_text }}</small></p>
+	                        {% endif %}
+	                    </div>
+	                </div>
+	            {% endif %}
+	        {% endfor %}
+	    </fieldset>
+	    <div class="form-actions">
+	        <button type="submit" class="btn btn-info" >Sign Up</button>
+	    </div>
+	</form>
+	</div>
+</div>
+</div>
 {% endblock %}
